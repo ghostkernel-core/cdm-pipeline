@@ -1,5 +1,6 @@
 -r requirements.txt
 pytest
+pytest-cov     # test coverage
 jsonschema     # model.json schema test
 ruff           # lint and format check
 mypy           # type check
