@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 import pytest
 from pydantic import ValidationError
@@ -12,7 +12,7 @@ def test_contact_is_written_in_cdm_format():
         firstname="Jane",
         lastname="Doe",
         emailaddress1=None,
-        createdon=datetime(2023, 1, 15, 10, 30, tzinfo=timezone.utc),
+        createdon=datetime(2023, 1, 15, 10, 30, tzinfo=UTC),
         statecode=0,
     )
     assert contact.model_dump(mode="json") == {
@@ -30,7 +30,7 @@ def test_amount_is_written_with_two_decimals():
         salesorderid="ORD-1",
         customerid="CST-001",
         totalamount="1200",
-        createdon=datetime(2023, 6, 1, tzinfo=timezone.utc),
+        createdon=datetime(2023, 6, 1, tzinfo=UTC),
     )
     assert order.model_dump(mode="json")["totalamount"] == "1200.00"
 
@@ -42,7 +42,7 @@ def test_bad_amount_is_rejected(amount):
             salesorderid="ORD-1",
             customerid="CST-001",
             totalamount=amount,
-            createdon=datetime(2023, 6, 1, tzinfo=timezone.utc),
+            createdon=datetime(2023, 6, 1, tzinfo=UTC),
         )
 
 
@@ -52,7 +52,7 @@ def test_empty_id_is_rejected():
             salesorderid="  ",
             customerid="CST-001",
             totalamount="1.00",
-            createdon=datetime(2023, 6, 1, tzinfo=timezone.utc),
+            createdon=datetime(2023, 6, 1, tzinfo=UTC),
         )
 
 

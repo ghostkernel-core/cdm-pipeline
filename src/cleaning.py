@@ -1,11 +1,11 @@
 """Cleaning rules for the raw source fields."""
 
 import re
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 # Some source timestamps have no time zone. All the others end in Z (UTC),
 # so we take the ones without a zone as UTC too.
-SOURCE_TZ = timezone.utc
+SOURCE_TZ = UTC
 
 STATUS_CODES = {"active": 0, "inactive": 1}
 
@@ -22,7 +22,7 @@ def parse_timestamp(value: str) -> datetime:
     parsed = datetime.fromisoformat(value)
     if parsed.tzinfo is None:
         parsed = parsed.replace(tzinfo=SOURCE_TZ)
-    return parsed.astimezone(timezone.utc)
+    return parsed.astimezone(UTC)
 
 
 def clean_email(value: str) -> str | None:

@@ -4,7 +4,7 @@ Every field carries its CDM data type and description. The CSV headers and
 model.json are both built from these classes, so they always match.
 """
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from decimal import Decimal
 from typing import Annotated, ClassVar
 
@@ -14,7 +14,7 @@ from pydantic import BaseModel, ConfigDict, Field, PlainSerializer
 UtcDateTime = Annotated[
     datetime,
     PlainSerializer(
-        lambda value: value.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        lambda value: value.astimezone(UTC).strftime("%Y-%m-%dT%H:%M:%SZ"),
         return_type=str,
     ),
 ]

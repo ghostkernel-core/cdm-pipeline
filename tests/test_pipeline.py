@@ -108,7 +108,7 @@ def test_incomplete_last_record_is_skipped(tmp_path):
 def test_file_saved_by_excel_is_read(tmp_path):
     # BOM at the start, Windows line ends, spaces around the column names
     path = tmp_path / "raw.csv"
-    path.write_bytes("﻿ a , b \r\n1,2\r\n".encode("utf-8"))
+    path.write_bytes("﻿ a , b \r\n1,2\r\n".encode())
     assert read_csv(path, ["a", "b"]) == [{"a": "1", "b": "2"}]
 
 

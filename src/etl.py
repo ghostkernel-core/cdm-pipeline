@@ -55,7 +55,7 @@ def read_csv(path: Path, expected_columns: list[str]) -> list[dict]:
                     len(header),
                 )
             else:
-                rows.append(dict(zip(header, fields)))
+                rows.append(dict(zip(header, fields, strict=True)))
 
     if pending:
         log.error("%s: last record is incomplete, skipped", path.name)

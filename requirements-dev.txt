@@ -1,3 +1,4 @@
 -r requirements.txt
 pytest
 jsonschema     # model.json schema test
+ruff           # lint and format check

@@ -1,0 +1,6 @@
+line-length = 100
+target-version = "py311"
+
+[lint]
+# E/W: style, F: unused or undefined names, I: import order, B: likely bugs, UP: newer Python syntax
+select = ["E", "W", "F", "I", "B", "UP"]
