@@ -31,8 +31,14 @@ def cdm_field(data_type: str, description: str, **kwargs):
     return Field(description=description, json_schema_extra={"cdm_data_type": data_type}, **kwargs)
 
 
-class Contact(BaseModel):
+class CdmEntity(BaseModel):
+    """Settings shared by the CDM entities."""
+
     model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
+    cdm_description: ClassVar[str]
+
+
+class Contact(CdmEntity):
     cdm_description: ClassVar[str] = "Standard CDM Contact entity for individual customers"
 
     contactid: str = cdm_field("string", "Unique primary key for the contact", min_length=1)
@@ -43,8 +49,7 @@ class Contact(BaseModel):
     statecode: int = cdm_field("int64", "Status code: 0 for Active, 1 for Inactive")
 
 
-class SalesOrder(BaseModel):
-    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
+class SalesOrder(CdmEntity):
     cdm_description: ClassVar[str] = "Standard CDM SalesOrder entity for transactions"
 
     salesorderid: str = cdm_field("string", "Unique order identifier", min_length=1)

@@ -2,21 +2,20 @@
 
 import json
 from pathlib import Path
+from typing import cast
 
-from pydantic import BaseModel
-
-from src.models import Contact, SalesOrder
+from src.models import CdmEntity, Contact, SalesOrder
 
 CSV_FORMAT = {"$type": "CsvFormatSettings", "columnHeaders": True, "delimiter": ","}
 
 
-def location(model: type[BaseModel]) -> str:
+def location(model: type[CdmEntity]) -> str:
     """Partition file of an entity, relative to the lakehouse folder."""
     name = model.__name__
     return f"{name}/{name}.csv"
 
 
-def entity(model: type[BaseModel]) -> dict:
+def entity(model: type[CdmEntity]) -> dict:
     name = model.__name__
     return {
         "$type": "LocalEntity",
@@ -25,7 +24,8 @@ def entity(model: type[BaseModel]) -> dict:
         "attributes": [
             {
                 "name": field_name,
-                "dataType": field.json_schema_extra["cdm_data_type"],
+                # json_schema_extra is the dict that cdm_field() in models.py sets
+                "dataType": cast(dict, field.json_schema_extra)["cdm_data_type"],
                 "description": field.description,
             }
             for field_name, field in model.model_fields.items()

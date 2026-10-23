@@ -2,6 +2,7 @@
 
 import csv
 import logging
+from collections.abc import Sequence
 from pathlib import Path
 
 from pydantic import BaseModel, ValidationError
@@ -64,7 +65,8 @@ def read_csv(path: Path, expected_columns: list[str]) -> list[dict]:
 
 def transform_customers(rows: list[dict]) -> tuple[list[Contact], list[dict]]:
     """raw_customers rows -> CDM Contact. Returns (contacts, rejected rows)."""
-    contacts, rejected = [], []
+    contacts: list[Contact] = []
+    rejected: list[dict] = []
     for row in rows:
         try:
             email = clean_email(row["email_addr"])
@@ -95,7 +97,8 @@ def transform_orders(
     rows: list[dict], contact_ids: set[str]
 ) -> tuple[list[SalesOrder], list[dict]]:
     """raw_orders rows -> CDM SalesOrder. Orders of unknown customers are rejected."""
-    orders, rejected = [], []
+    orders: list[SalesOrder] = []
+    rejected: list[dict] = []
     for row in rows:
         try:
             order = SalesOrder(
@@ -124,7 +127,7 @@ def reject(row: dict, record_id: str, error: ValueError, rejected: list[dict]) -
     rejected.append({**row, "reason": reason})
 
 
-def write_entity(path: Path, model: type[BaseModel], records: list[BaseModel]) -> None:
+def write_entity(path: Path, model: type[BaseModel], records: Sequence[BaseModel]) -> None:
     """Write CDM records to CSV, columns in the same order as the model."""
     write_csv(
         path, list(model.model_fields), [record.model_dump(mode="json") for record in records]
