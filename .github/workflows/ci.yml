@@ -7,6 +7,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read  # the CI token can only read the repository
+    timeout-minutes: 10
     strategy:
       matrix:
         python-version: ["3.11", "3.13"]
@@ -40,3 +43,12 @@ jobs:
 
       - name: Check that the committed output is up to date
         run: git diff --exit-code cdm_lakehouse
+
+      - name: Keep the log and the rejected rows
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: pipeline-output-py${{ matrix.python-version }}
+          path: |
+            logs/
+            quarantine/
