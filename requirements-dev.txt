@@ -3,5 +3,9 @@ pytest
 pytest-cov     # test coverage
 jsonschema     # model.json schema test
 pip-audit      # known vulnerabilities in dependencies
-ruff           # lint and format check
-mypy           # type check
+pre-commit     # runs ruff before each commit
+
+# Pinned: a new release can add rules or find new errors and fail CI without a code change.
+# Update them on purpose, and keep ruff in step with the rev in .pre-commit-config.yaml.
+ruff==0.17.1   # lint and format check
+mypy==2.4.0    # type check

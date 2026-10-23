@@ -1,0 +1,8 @@
+# Runs the ruff lint and format checks on the changed files before each commit.
+# Set up once with: pre-commit install
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.17.1  # same ruff version as in requirements-dev.txt
+    hooks:
+      - id: ruff-check
+      - id: ruff-format
