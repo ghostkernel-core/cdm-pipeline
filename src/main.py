@@ -4,6 +4,7 @@ Usage (from the project folder):  python -m src.main
 """
 
 import logging
+import time
 from pathlib import Path
 
 from src.etl import (
@@ -68,9 +69,11 @@ def run(
 
 def setup_logging() -> None:
     LOG_FILE.parent.mkdir(exist_ok=True)
+    logging.Formatter.converter = time.gmtime  # log times in UTC, like the data
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s %(levelname)-7s %(message)s",
+        datefmt="%Y-%m-%dT%H:%M:%SZ",
         handlers=[
             logging.StreamHandler(),
             logging.FileHandler(LOG_FILE, mode="w", encoding="utf-8"),
