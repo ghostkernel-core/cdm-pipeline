@@ -11,7 +11,7 @@ with a `model.json` manifest.
 | Modular Python ETL and manifest generation | [`src/`](src/) |
 | Raw input files supplied with the task | [`data/raw/`](data/raw/) |
 | Generated Contact and SalesOrder data | [`cdm_lakehouse/`](cdm_lakehouse/) |
-| Warnings produced from the supplied data | [`logs/pipeline-warnings.log`](logs/pipeline-warnings.log) |
+| ETL run log for the supplied data | [`logs/pipeline-run.log`](logs/pipeline-run.log) |
 | CDM metadata manifest | [`cdm_lakehouse/model.json`](cdm_lakehouse/model.json) |
 | Source-to-target, entity relationship and storage diagrams | [Step 4: Diagrams](#step-4-diagrams) |
 | Automated tests | [`tests/`](tests/) |
@@ -62,12 +62,13 @@ The run writes these files:
 | `cdm_lakehouse/SalesOrder/SalesOrder.csv` | The clean sales orders |
 | `cdm_lakehouse/model.json` | The CDM manifest |
 | `quarantine/Contact_rejected.csv`, `quarantine/SalesOrder_rejected.csv` | Rows that could not be loaded, with the reason |
-| `logs/pipeline.log` | The complete log of the last run (generated locally) |
-| `logs/pipeline-warnings.log` | The warnings from the supplied data; regenerated and committed as a submission output |
+| `logs/pipeline.log` | The timestamped log of the last run (generated locally and uploaded by CI) |
+| `logs/pipeline-run.log` | The complete deterministic ETL log for the supplied data; committed as a submission output |
+| `logs/pipeline-warnings.log` | A warning-only view of the same run |
 
 Every run rebuilds these files from `data/raw/`, so the same input always gives the same output.
-The committed warning log records the repaired customer row, invalid email and orphan order. It
-omits run timestamps so a fresh run produces the same committed file.
+The committed run log contains the repaired customer row, invalid email, orphan order and the final
+Contact and SalesOrder counts. It omits run timestamps so a fresh run produces the same file.
 
 ### Checks (optional)
 

@@ -6,4 +6,5 @@ __pycache__/
 .coverage
 logs/*
 !logs/pipeline-warnings.log
+!logs/pipeline-run.log
 quarantine/

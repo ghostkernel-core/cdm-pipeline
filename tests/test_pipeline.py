@@ -3,6 +3,7 @@ import logging
 
 import pytest
 
+from src import main
 from src.etl import read_csv, transform_customers, transform_orders
 from src.main import RAW_DIR, run
 
@@ -74,6 +75,20 @@ def test_problems_are_logged(tmp_path, caplog):
     assert "raw_customers.csv line 7: record was split over two lines" in caplog.text
     assert "customer CST-003: invalid email 'invalid-email-format'" in caplog.text
     assert "record ORD-1005 rejected: orphan order" in caplog.text
+
+
+def test_logging_writes_complete_and_warning_only_files(tmp_path, monkeypatch):
+    monkeypatch.setattr(main, "LOG_FILE", tmp_path / "pipeline.log")
+    monkeypatch.setattr(main, "RUN_LOG_FILE", tmp_path / "pipeline-run.log")
+    monkeypatch.setattr(main, "WARNING_LOG_FILE", tmp_path / "pipeline-warnings.log")
+    main.setup_logging()
+
+    logging.getLogger("test").info("finished")
+    logging.getLogger("test").warning("problem")
+    logging.shutdown()
+
+    assert "INFO    finished" in (tmp_path / "pipeline-run.log").read_text(encoding="utf-8")
+    assert (tmp_path / "pipeline-warnings.log").read_text(encoding="utf-8") == "WARNING problem\n"
 
 
 # --- reader ---
