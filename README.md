@@ -12,13 +12,14 @@ with a `model.json` manifest.
 | Raw input files supplied with the task | [`data/raw/`](data/raw/) |
 | Generated Contact and SalesOrder data | [`cdm_lakehouse/`](cdm_lakehouse/) |
 | ETL run log for the supplied data | [`logs/pipeline-run.log`](logs/pipeline-run.log) |
+| Rejected rows and rejection reasons | [`quarantine/`](quarantine/) |
 | CDM metadata manifest | [`cdm_lakehouse/model.json`](cdm_lakehouse/model.json) |
 | Source-to-target, entity relationship and storage diagrams | [Step 4: Diagrams](#step-4-diagrams) |
 | Automated tests | [`tests/`](tests/) |
 | Five-slide implementation walkthrough | [`docs/CDM-pipeline-5-slide-walkthrough.pptx`](docs/CDM-pipeline-5-slide-walkthrough.pptx) · [PDF](docs/CDM-pipeline-5-slide-walkthrough.pdf) |
 
-The committed CSV files and `model.json` are the output of `python -m src.main`. CI reruns the
-pipeline and fails if those deliverables are out of date.
+The committed entity CSVs, quarantine CSVs, logs and `model.json` are the output of
+`python -m src.main`. CI reruns the pipeline and fails if those deliverables are out of date.
 
 ## How to run
 

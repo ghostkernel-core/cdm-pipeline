@@ -1,0 +1,2 @@
+tx_id,customer_id,amount_usd,tx_timestamp,reason
+ORD-1005,CST-999,99.00,2023-06-06T10:00:00Z,orphan order: customer CST-999 not found in Contact

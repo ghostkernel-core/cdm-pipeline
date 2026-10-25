@@ -7,4 +7,3 @@ __pycache__/
 logs/*
 !logs/pipeline-warnings.log
 !logs/pipeline-run.log
-quarantine/
