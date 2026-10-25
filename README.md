@@ -11,6 +11,7 @@ with a `model.json` manifest.
 | Modular Python ETL and manifest generation | [`src/`](src/) |
 | Raw input files supplied with the task | [`data/raw/`](data/raw/) |
 | Generated Contact and SalesOrder data | [`cdm_lakehouse/`](cdm_lakehouse/) |
+| Warnings produced from the supplied data | [`logs/pipeline-warnings.log`](logs/pipeline-warnings.log) |
 | CDM metadata manifest | [`cdm_lakehouse/model.json`](cdm_lakehouse/model.json) |
 | Source-to-target, entity relationship and storage diagrams | [Step 4: Diagrams](#step-4-diagrams) |
 | Automated tests | [`tests/`](tests/) |
@@ -61,9 +62,12 @@ The run writes these files:
 | `cdm_lakehouse/SalesOrder/SalesOrder.csv` | The clean sales orders |
 | `cdm_lakehouse/model.json` | The CDM manifest |
 | `quarantine/Contact_rejected.csv`, `quarantine/SalesOrder_rejected.csv` | Rows that could not be loaded, with the reason |
-| `logs/pipeline.log` | The log of the last run |
+| `logs/pipeline.log` | The complete log of the last run (generated locally) |
+| `logs/pipeline-warnings.log` | The warnings from the supplied data; regenerated and committed as a submission output |
 
 Every run rebuilds these files from `data/raw/`, so the same input always gives the same output.
+The committed warning log records the repaired customer row, invalid email and orphan order. It
+omits run timestamps so a fresh run produces the same committed file.
 
 ### Checks (optional)
 

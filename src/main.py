@@ -24,6 +24,7 @@ RAW_DIR = ROOT / "data" / "raw"
 LAKEHOUSE_DIR = ROOT / "cdm_lakehouse"
 QUARANTINE_DIR = ROOT / "quarantine"
 LOG_FILE = ROOT / "logs" / "pipeline.log"
+WARNING_LOG_FILE = ROOT / "logs" / "pipeline-warnings.log"
 
 log = logging.getLogger(__name__)
 
@@ -70,6 +71,9 @@ def run(
 def setup_logging() -> None:
     LOG_FILE.parent.mkdir(exist_ok=True)
     logging.Formatter.converter = time.gmtime  # log times in UTC, like the data
+    warning_handler = logging.FileHandler(WARNING_LOG_FILE, mode="w", encoding="utf-8")
+    warning_handler.setLevel(logging.WARNING)
+    warning_handler.setFormatter(logging.Formatter("%(levelname)-7s %(message)s"))
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s %(levelname)-7s %(message)s",
@@ -77,6 +81,7 @@ def setup_logging() -> None:
         handlers=[
             logging.StreamHandler(),
             logging.FileHandler(LOG_FILE, mode="w", encoding="utf-8"),
+            warning_handler,
         ],
     )
 

@@ -42,7 +42,7 @@ jobs:
         run: python -m src.main
 
       - name: Check that the committed output is up to date
-        run: git diff --exit-code cdm_lakehouse
+        run: git diff --exit-code cdm_lakehouse logs/pipeline-warnings.log
 
       - name: Keep the log and the rejected rows
         if: always()

@@ -4,5 +4,6 @@ __pycache__/
 .ruff_cache/
 .mypy_cache/
 .coverage
-logs/
+logs/*
+!logs/pipeline-warnings.log
 quarantine/

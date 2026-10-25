@@ -1,0 +1,3 @@
+WARNING raw_customers.csv line 7: record was split over two lines, joined it
+WARNING customer CST-003: invalid email 'invalid-email-format', set to empty
+WARNING record ORD-1005 rejected: orphan order: customer CST-999 not found in Contact
