@@ -17,6 +17,7 @@ with a `model.json` manifest.
 | Source-to-target, entity relationship and storage diagrams | [Step 4: Diagrams](#step-4-diagrams) |
 | Automated tests | [`tests/`](tests/) |
 | Four-slide technical walkthrough | [`docs/CDM-pipeline-technical-walkthrough.pptx`](docs/CDM-pipeline-technical-walkthrough.pptx) · [PDF](docs/CDM-pipeline-technical-walkthrough.pdf) |
+| Same walkthrough in German | [`docs/CDM-pipeline-technical-walkthrough-de.pptx`](docs/CDM-pipeline-technical-walkthrough-de.pptx) · [PDF](docs/CDM-pipeline-technical-walkthrough-de.pdf) |
 
 The committed entity CSVs, quarantine CSVs, logs and `model.json` are the output of
 `python -m src.main`. CI reruns the pipeline and fails if those deliverables are out of date.
